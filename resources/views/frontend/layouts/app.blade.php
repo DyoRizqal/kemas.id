@@ -24,12 +24,27 @@
     <link rel="stylesheet" href="{{ asset('css/swiper-bundle.min.css') }}" />
     <livewire:styles />
     @stack('statis-css')
+    @if ($announcements->count())
+        <style>
+            #app {
+                flex: 1;
+                margin-top: 5rem;
+            }
+        </style>
+    @else
+        <style>
+            #app {
+                flex: 1;
+                margin-top: 3.5rem;
+            }
+        </style>
+    @endif
     @stack('after-styles')
 </head>
 
 <body>
     @include('includes.partials.logged-in-as')
-    @include('includes.partials.announcements')
+    {{-- @include('includes.partials.announcements') --}}
 
     @include('frontend.includes.nav')
     <div id="app">

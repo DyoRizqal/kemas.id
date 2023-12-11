@@ -5,10 +5,6 @@
 @section('content')
     @push('statis-css')
         <style>
-            .container {
-                padding-top: 20px;
-            }
-
             .custom-card {
                 border: none;
                 border-radius: 10px;
