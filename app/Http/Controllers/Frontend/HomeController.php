@@ -28,9 +28,34 @@ class HomeController
     public function index()
     {
         $data['slideshow'] = Images::where('jenis', 'slideshow')->where('status', 1)->get();
-        $data['news'] = News::orderBy('id', 'DESC')->take(3)->get();
         $image = Images::where('jenis', 'gallery')->orderBy('id', 'DESC')->where('status', 1)->get();
         $data['gallerys'] = $image->groupBy('uuid');
+
+        $client = new Client(['verify' => false]);
+        $urls = [
+            'cnn' => 'https://api-berita-indonesia.vercel.app/cnn/terbaru/',
+            'republika' => 'https://api-berita-indonesia.vercel.app/republika/terbaru/',
+            'tempo' => 'https://api-berita-indonesia.vercel.app/tempo/nasional/'
+        ];
+
+        $newsInfo = [];
+
+        foreach ($urls as $source => $url) {
+            $response = $client->request('GET', $url);
+
+            if ($response->getStatusCode() == 200) {
+                $apiData = json_decode($response->getBody()->getContents(), true);
+
+                $newsInfo[$source] = [
+                    'link' => $apiData['data']['link'] ?? null,
+                    'description' => $apiData['data']['description'] ?? null,
+                    'title' => $apiData['data']['title'] ?? null,
+                    'image' => $apiData['data']['image'] ?? null
+                ];
+            }
+        }
+
+        $data['newsInfo'] = $newsInfo;
         return view('frontend.index', $data);
     }
     public function index_galeri()

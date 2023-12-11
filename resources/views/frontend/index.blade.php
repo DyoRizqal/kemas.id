@@ -14,6 +14,21 @@
                 border: none;
                 margin: auto;
             }
+
+            .card-news-section .card-img-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+            }
+
+            .card-news-section .card-img-container img {
+                width: 100%;
+            }
+
+            .card-news-section .card-body {
+                padding: 15px;
+            }
         </style>
     @endpush
 
@@ -155,7 +170,7 @@
                 <div class="container">
                     <div class="row mb-3 align-items-center">
                         <div class="col-6 col-md-8 d-flex align-items-center">
-                            <h4 class="title-sub mb-0">BERITA TERKINI</h4>
+                            <h4 class="title-sub mb-0">SUMBER BERITA TERKINI</h4>
                         </div>
                         <div class="col-6 col-md-4 d-flex justify-content-end">
                             <a href="{{ route('home.index_berita') }}" class="lihat-semua">Lihat Semua Berita </a>
@@ -163,7 +178,7 @@
                     </div>
 
                     <div class="row my-5">
-                        @if (count($news) > 0)
+                        {{-- @if (count($news) > 0)
                             @foreach ($news as $new)
                                 <div class="col-lg-4 col-md-6 mb-4">
                                     <div class="card h-100">
@@ -180,7 +195,31 @@
                                 role="alert">
                                 Tidak ada data berita
                             </div>
+                        @endif --}}
+                        @if (isset($newsInfo) && !empty($newsInfo))
+                            @foreach ($newsInfo as $source => $info)
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <a
+                                        href="{{ route('home.index_berita_kategori', ['sumber' => $source, 'kategori' => 'terbaru']) }}">
+                                        <div class="card h-100 card-news-section">
+                                            @if (isset($info['image']))
+                                                <div class="card-img-container">
+                                                    <img src="{{ $info['image'] }}" alt="{{ $source }} image">
+                                                </div>
+                                            @endif
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ ucfirst($source) }} News</h5>
+                                                <p class="card-text">{{ $info['title'] }}</p>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
+                        @else
+                            <p>No news data available.</p>
                         @endif
+
                     </div>
                     <div class="row mb-3 align-items-center">
                         <div class="col-6 col-md-8 d-flex align-items-center">
