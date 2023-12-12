@@ -36,7 +36,7 @@
                                         <h6 class="card-title">{{ $file->alt }}</h6>
                                         <p class="card-text">{{ $file->size }}</p>
                                         @if ($file->upload_by == Auth::user()->name)
-                                            <button type="button" class="btn btn-info show_confirm_status"
+                                            <button type="button" class="btn btn-info show_confirm_status mb-2"
                                                 data-id="{{ $file->id }}" data-name="{{ $file->alt }}"
                                                 data-url="{{ route('images.status_slideshow', ['id' => $file->id]) }}">
                                                 @if ($file->status == 1)
@@ -45,7 +45,7 @@
                                                     Aktifkan
                                                 @endif
                                             </button>
-                                            <button type="button" class="btn btn-danger show_confirm"
+                                            <button type="button" class="btn btn-danger show_confirm mb-2"
                                                 data-id="{{ $file->id }}" data-name="{{ $file->alt }}"
                                                 data-url="{{ route('images.destroy_slideshow', ['id' => $file->id]) }}">
                                                 Hapus

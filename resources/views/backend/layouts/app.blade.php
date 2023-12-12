@@ -20,6 +20,8 @@
     <link href="{{ asset('css/dropzone.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
     <link href="{{ asset('css/jquery.dataTables.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/responsive.bootstrap4.min.css') }}" rel="stylesheet">
     <livewire:styles />
     @stack('statis-css')
     @stack('after-styles')
@@ -53,6 +55,8 @@
     <script src="{{ mix('js/backend.js') }}"></script>
     <script src="{{ asset('js/sweetalert2@11.js') }}"></script>
     <script src="{{ asset('js/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('js/responsive.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('js/dropzone-min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>

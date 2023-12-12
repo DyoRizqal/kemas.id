@@ -23,7 +23,7 @@
                                                 data-title="{{ $gallery->first()->alt }}"
                                                 style="position: relative; display: block;">
                                                 <img src="{{ asset($gallery->first()->path) }}" class="card-img-top"
-                                                    alt="{{ $gallery->first()->alt }}">
+                                                    alt="{{ $gallery->first()->alt }}" loading="lazy">
                                             </a>
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ $gallery->first()->alt }}</h5>

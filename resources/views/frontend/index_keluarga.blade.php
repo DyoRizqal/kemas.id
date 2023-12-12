@@ -50,6 +50,38 @@
                 padding-right: 10px;
                 padding-left: 10px;
             }
+
+            @media screen and (max-width: 400px) {
+                .container {
+                    padding-left: 10px;
+                    padding-right: 10px;
+                }
+
+                .card-body {
+                    padding: 10px;
+                }
+
+                .card-body table {
+                    font-size: 12px;
+                }
+
+                .card-body img {
+                    max-width: 100%;
+                    height: auto;
+                }
+
+                #section-4 .kemas-card {
+                    border-radius: 10px;
+                    border-color: #fdb33a;
+                    background-color: #fdb33a;
+                    color: #ffffff;
+                    padding: 0 !important;
+                }
+
+                #section-4 .kemas-card .card-body {
+                    padding: 0 !important;
+                }
+            }
         </style>
     @endpush
     <x-backend.card>
@@ -68,39 +100,39 @@
                             @csrf
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="nama">Nama</label>
+                                    <label for="nama">Nama <small class="text-danger">*</small> </label>
                                     <input type="text" class="form-control" id="nama" name="nama" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="alamat">Alamat</label>
+                                    <label for="alamat">Alamat <small class="text-danger">*</small></label>
                                     <textarea class="form-control" id="alamat" name="alamat" required>{{ $kk->alamat }}</textarea>
                                 </div>
 
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                        <label for="nomorKK">Nomor KK</label>
+                                        <label for="nomorKK">Nomor KK </label>
                                         <input type="text" class="form-control" id="nomorKK" name="nomorKK"
                                             value="{{ $kk->nomorKK }}" readonly>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="nomorKTP">Nomor KTP</label>
-                                        <input type="text" class="form-control" id="nomorKTP" name="nomorKTP" required
-                                            oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                        <input type="text" class="form-control" id="nomorKTP" name="nomorKTP"
+                                            oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                        <label for="tempatLahir">Tempat Lahir</label>
-                                        <select class="form-control" id="tempatLahir" name="tempatLahir">
+                                        <label for="tempatLahir">Tempat Lahir <small class="text-danger">*</small></label>
+                                        <select class="form-control" id="tempatLahir" name="tempatLahir" required>
                                             @foreach ($provinsi['value'] as $prov)
                                                 <option value="{{ $prov['name'] }}">{{ $prov['name'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="tanggalLahir">Tanggal Lahir</label>
+                                        <label for="tanggalLahir">Tanggal Lahir <small class="text-danger">*</small></label>
                                         <input type="date" class="form-control" id="tanggalLahir" name="tanggalLahir"
                                             required>
                                     </div>
@@ -108,7 +140,7 @@
 
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                        <label for="jenisKelamin">Jenis Kelamin</label>
+                                        <label for="jenisKelamin">Jenis Kelamin <small class="text-danger">*</small></label>
                                         <select class="form-control" id="jenisKelamin" name="jenisKelamin" required>
                                             <option value="Laki-laki">Laki-laki</option>
                                             <option value="Perempuan">Perempuan</option>
@@ -116,7 +148,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label for="agama">Agama</label>
+                                        <label for="agama">Agama <small class="text-danger">*</small></label>
                                         <select class="form-control" id="agama" name="agama" required>
                                             <option value="Islam">Islam</option>
                                             <option value="Kristen">Kristen</option>
@@ -129,7 +161,8 @@
 
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                        <label for="statusPerkawinan">Status Perkawinan</label>
+                                        <label for="statusPerkawinan">Status Perkawinan <small
+                                                class="text-danger">*</small></label>
                                         <select class="form-control" id="statusPerkawinan" name="statusPerkawinan" required>
                                             <option value="Belum Menikah">Belum Menikah</option>
                                             <option value="Menikah">Menikah</option>
@@ -138,8 +171,10 @@
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="statusDiKeluarga">Status di Keluarga</label>
-                                        <select class="form-control" id="statusDiKeluarga" name="statusDiKeluarga" required>
+                                        <label for="statusDiKeluarga">Status di Keluarga <small
+                                                class="text-danger">*</small></label>
+                                        <select class="form-control" id="statusDiKeluarga" name="statusDiKeluarga"
+                                            required>
                                             <option value="Kepala Keluarga">Kepala Keluarga</option>
                                             <option value="Istri">Istri</option>
                                             <option value="Anak">Anak</option>
@@ -175,7 +210,7 @@
 
                                 <div class="form-group">
                                     <label for="nomorTelepon">Nomor Telepon</label>
-                                    <input type="text" class="form-control" id="nomorTelepon" name="nomorTelepon">
+                                    <input type="text" class="form-control" id="nomorTelepon" name="nomorTelepon" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                 </div>
 
                                 <div class="form-group">
@@ -193,7 +228,7 @@
                 </div>
             </div>
 
-            <div class="my-5" id="section-4">
+            <div class="my-5" id="section-4" style="margin-top: 6rem !important">
                 <div class="container">
                     <div class="card kemas-card mb-3">
                         <div class="row no-gutters d-flex">
@@ -353,7 +388,33 @@
                             @else
                                 <div class="d-flex align-items-center justify-content-center alert alert-secondary mx-auto"
                                     role="alert">
-                                    Tidak ada anggota keluarga
+                                    Tidak ada anak dalam anggota keluarga
+                                </div>
+                            @endif
+                            @if (count($lainnya) > 0)
+                                @foreach ($lainnya as $warga)
+                                    <div class="col-md-6 mb-4">
+                                        <div class="card position-relative profile-member p-4">
+                                            <a href="#" class="btn-edit position-absolute" data-toggle="modal"
+                                                data-target="#tambahWargaModal" data-warga="{{ json_encode($warga) }}">
+                                                <i class="fas fa-pen"></i>
+                                            </a>
+                                            @include('frontend.auth.includes.card-profile', [
+                                                'warga' => $warga,
+                                            ])
+                                            <button type="button" class="btn btn-sm btn-danger show_confirm"
+                                                data-id="{{ $warga->uuid }}"
+                                                data-url="{{ route('home.destroy_keluarga', ['id' => $warga->uuid]) }}">
+                                                <span class="cil-trash btn-icon mr-2"></span>
+                                                Hapus
+                                            </button>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @else
+                                <div class="d-flex align-items-center justify-content-center alert alert-secondary mx-auto"
+                                    role="alert">
+                                    Tidak ada anggota lainnya
                                 </div>
                             @endif
                         </div>
