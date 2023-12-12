@@ -74,8 +74,9 @@
 <div class="top-section">
     <nav class="navbar custom-navbar navbar-expand-md">
         <div class="container">
-            <img src="{{ asset('img/Logo-Kemas.png') }}" class="navbar-brand">
-
+            <a href="{{ route('frontend.index') }}" style="display:contents">
+                <img src="{{ asset('img/Logo-Kemas.png') }}" class="navbar-brand" alt="logo-kemas">
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                 <span class="fas fa-bars"></span>
@@ -115,31 +116,48 @@
                                     <span class="caret"></span>
                                 </x-slot>
                             </x-utils.link>
-
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <x-utils.link :href="route('home.index_keluarga')" :active="activeClass(Route::is('home.index_keluarga'))" class="dropdown-item">
-                                    <i class="fas fa-users mr-2"></i>
-                                    {{ __('Keluargaku') }}
-                                </x-utils.link>
 
-                                <x-utils.link :href="route('home.index_surat')" :active="activeClass(Route::is('home.index_surat'))"
-                                    class="{{ request()->segment(2) === 'surat' ? 'active' : '' }} dropdown-item">
-                                    <i class="fas fa-envelope mr-2"></i>
-                                    {{ __('Pengajuan Surat RT') }}
-                                </x-utils.link>
-                                <x-utils.link :href="route('home.index_pengajuan')" :active="activeClass(Route::is('home.index_pengajuan'))" class="dropdown-item">
-                                    <i class="fas fa-file-contract mr-2"></i>
-                                    {{ __('Daftar Pengajuanku') }}
-                                </x-utils.link>
+                                @if ($logged_in_user->isAdmin())
+                                    <x-utils.link :href="route('admin.dashboard')" class="dropdown-item">
+                                        <i class="fas fa-user-shield mr-2"></i>
+                                        {{ __('Dashboard') }}
+                                    </x-utils.link>
+                                    <a href="{{ route('frontend.auth.logout') }}" class="dropdown-item"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <i class="fas fa-sign-out-alt mr-2"></i>
+                                        @lang('Keluar')
+                                    </a>
+                                    <x-forms.post :action="route('frontend.auth.logout')" id="logout-form" class="d-none">
+                                        @csrf
+                                    </x-forms.post>
+                                @endif
 
-                                <a href="{{ route('frontend.auth.logout') }}" class="dropdown-item"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    <i class="fas fa-sign-out-alt mr-2"></i>
-                                    @lang('Keluar')
-                                </a>
-                                <x-forms.post :action="route('frontend.auth.logout')" id="logout-form" class="d-none">
-                                    @csrf
-                                </x-forms.post>
+                                @if ($logged_in_user->isUser())
+                                    <x-utils.link :href="route('home.index_keluarga')" :active="activeClass(Route::is('home.index_keluarga'))" class="dropdown-item">
+                                        <i class="fas fa-users mr-2"></i>
+                                        {{ __('Keluargaku') }}
+                                    </x-utils.link>
+
+                                    <x-utils.link :href="route('home.index_surat')" :active="activeClass(Route::is('home.index_surat'))"
+                                        class="{{ request()->segment(2) === 'surat' ? 'active' : '' }} dropdown-item">
+                                        <i class="fas fa-envelope mr-2"></i>
+                                        {{ __('Pengajuan Surat RT') }}
+                                    </x-utils.link>
+                                    <x-utils.link :href="route('home.index_pengajuan')" :active="activeClass(Route::is('home.index_pengajuan'))" class="dropdown-item">
+                                        <i class="fas fa-file-contract mr-2"></i>
+                                        {{ __('Daftar Pengajuanku') }}
+                                    </x-utils.link>
+
+                                    <a href="{{ route('frontend.auth.logout') }}" class="dropdown-item"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <i class="fas fa-sign-out-alt mr-2"></i>
+                                        @lang('Keluar')
+                                    </a>
+                                    <x-forms.post :action="route('frontend.auth.logout')" id="logout-form" class="d-none">
+                                        @csrf
+                                    </x-forms.post>
+                                @endif
                             </div>
                         </li>
                     @endguest
@@ -180,29 +198,46 @@
                             </x-utils.link>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <x-utils.link :href="route('home.index_keluarga')" :active="activeClass(Route::is('home.index_keluarga'))" class="dropdown-item">
-                                    <i class="fas fa-users mr-2"></i>
-                                    {{ __('Keluargaku') }}
-                                </x-utils.link>
+                                @if ($logged_in_user->isAdmin())
+                                    <x-utils.link :href="route('admin.dashboard')" class="dropdown-item">
+                                        <i class="fas fa-user-shield mr-2"></i>
+                                        {{ __('Dashboard') }}
+                                    </x-utils.link>
+                                    <a href="{{ route('frontend.auth.logout') }}" class="dropdown-item"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <i class="fas fa-sign-out-alt mr-2"></i>
+                                        @lang('Keluar')
+                                    </a>
+                                    <x-forms.post :action="route('frontend.auth.logout')" id="logout-form" class="d-none">
+                                        @csrf
+                                    </x-forms.post>
+                                @endif
 
-                                <x-utils.link :href="route('home.index_surat')" :active="activeClass(Route::is('home.index_surat'))"
-                                    class="{{ request()->segment(2) === 'surat' ? 'active' : '' }} dropdown-item">
-                                    <i class="fas fa-envelope mr-2"></i>
-                                    {{ __('Pengajuan Surat RT') }}
-                                </x-utils.link>
-                                <x-utils.link :href="route('home.index_pengajuan')" :active="activeClass(Route::is('home.index_pengajuan'))" class="dropdown-item">
-                                    <i class="fas fa-file-contract mr-2"></i>
-                                    {{ __('Daftar Pengajuanku') }}
-                                </x-utils.link>
+                                @if ($logged_in_user->isUser())
+                                    <x-utils.link :href="route('home.index_keluarga')" :active="activeClass(Route::is('home.index_keluarga'))" class="dropdown-item">
+                                        <i class="fas fa-users mr-2"></i>
+                                        {{ __('Keluargaku') }}
+                                    </x-utils.link>
 
-                                <a href="{{ route('frontend.auth.logout') }}" class="dropdown-item"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    <i class="fas fa-sign-out-alt mr-2"></i>
-                                    @lang('Keluar')
-                                </a>
-                                <x-forms.post :action="route('frontend.auth.logout')" id="logout-form" class="d-none">
-                                    @csrf
-                                </x-forms.post>
+                                    <x-utils.link :href="route('home.index_surat')" :active="activeClass(Route::is('home.index_surat'))"
+                                        class="{{ request()->segment(2) === 'surat' ? 'active' : '' }} dropdown-item">
+                                        <i class="fas fa-envelope mr-2"></i>
+                                        {{ __('Pengajuan Surat RT') }}
+                                    </x-utils.link>
+                                    <x-utils.link :href="route('home.index_pengajuan')" :active="activeClass(Route::is('home.index_pengajuan'))" class="dropdown-item">
+                                        <i class="fas fa-file-contract mr-2"></i>
+                                        {{ __('Daftar Pengajuanku') }}
+                                    </x-utils.link>
+
+                                    <a href="{{ route('frontend.auth.logout') }}" class="dropdown-item"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <i class="fas fa-sign-out-alt mr-2"></i>
+                                        @lang('Keluar')
+                                    </a>
+                                    <x-forms.post :action="route('frontend.auth.logout')" id="logout-form" class="d-none">
+                                        @csrf
+                                    </x-forms.post>
+                                @endif
                             </div>
                         </li>
                     @endguest
@@ -210,11 +245,17 @@
             </div>
         </div>
     </nav>
-    @if ($announcements->count())
-        @foreach ($announcements as $announcement)
+    @php
+        $currentDate = Carbon\Carbon::now();
+        $messages = App\Domains\Announcement\Models\Announcement::where('starts_at', '<=', $currentDate)
+            ->where('ends_at', '>=', $currentDate)
+            ->get();
+    @endphp
+    @if ($messages->count())
+        @foreach ($messages as $announcement)
             <div class="alert @if ($announcement->type == 'info') alert-primary @else alert-danger @endif m-0 d-flex align-items-center justify-content-center"
                 role="alert" id="announcement">
-                <b>{{ new \Illuminate\Support\HtmlString($announcement->message) }}</b>
+                <b>{!! $announcement->message !!}</b>
             </div>
         @endforeach
     @endif

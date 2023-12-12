@@ -59,7 +59,7 @@
                                             <button type="button" class="btn btn-danger show_confirm"
                                                 data-id="{{ $images->first()->id }}" data-name="{{ $images->first()->alt }}"
                                                 data-url="{{ route('images.destroy_gallery', ['id' => $images->first()->uuid]) }}"
-                                                style="position: absolute; top: 10px; right: 10px;"
+                                                style="position: absolute; bottom: 10px; right: 10px;"
                                                 onclick="stopLightbox(event);">
                                                 Hapus
                                             </button>
@@ -96,6 +96,7 @@
                 maxFilesize: 2,
                 acceptedFiles: 'image/*',
                 parallelUploads: 5,
+                addRemoveLinks: true,
                 init: function() {
                     var myDropzone = this;
                     document.getElementById("submit-all").addEventListener("click", function() {

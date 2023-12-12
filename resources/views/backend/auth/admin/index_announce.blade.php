@@ -49,7 +49,7 @@
                                             <label for="tanggalMulai" class="form-label">Ditampilkan pada :</label>
                                             <div class="input-group">
                                                 <input type="date" class="form-control" id="tanggalMulai"
-                                                    name="tanggalMulai">
+                                                    name="tanggalMulai" required>
                                                 <input type="time" class="form-control" id="jamMulai" name="jamMulai">
                                             </div>
                                         </div>
@@ -60,7 +60,7 @@
                                             <label for="tanggalAkhir" class="form-label">Berakhir pada :</label>
                                             <div class="input-group">
                                                 <input type="date" class="form-control" id="tanggalAkhir"
-                                                    name="tanggalAkhir">
+                                                    name="tanggalAkhir" required>
                                                 <input type="time" class="form-control" id="jamAkhir" name="jamAkhir">
                                             </div>
                                         </div>
@@ -122,18 +122,21 @@
                                                 </table>
                                             </td>
                                             <td>
-
-                                                <a href="#" data-toggle="modal" data-target="#editAnnounceModal"
-                                                    id="btnEditAnnounce" class="btn btn-sm btn-primary"
-                                                    data-announce="{{ json_encode($announces) }}"><span
-                                                        class="cil-pencil btn-icon mr-2"></span>
-                                                    Edit</a>
-                                                <button type="button" class="btn btn-sm btn-danger show_confirm"
-                                                    data-id="{{ $announces->uuid }}" data-name="{{ $announces->alt }}"
-                                                    data-url="{{ route('admin.destroy_announce', ['id' => $announces->uuid]) }}">
-                                                    <span class="cil-trash btn-icon mr-2"></span>
-                                                    Hapus
-                                                </button>
+                                                <div class="mb-2">
+                                                    <a href="#" data-toggle="modal" data-target="#editAnnounceModal"
+                                                        id="btnEditAnnounce" class="btn btn-sm btn-primary"
+                                                        data-announce="{{ json_encode($announces) }}"><span
+                                                            class="cil-pencil btn-icon mr-2"></span>
+                                                        Edit</a>
+                                                </div>
+                                                <div>
+                                                    <button type="button" class="btn btn-sm btn-danger show_confirm"
+                                                        data-id="{{ $announces->uuid }}" data-name="{{ $announces->alt }}"
+                                                        data-url="{{ route('admin.destroy_announce', ['id' => $announces->uuid]) }}">
+                                                        <span class="cil-trash btn-icon mr-2"></span>
+                                                        Hapus
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -194,6 +197,7 @@
             $(document).ready(function() {
                 $('#myTable').DataTable({
                     "ordering": false,
+                    responsive: true
                 });
             });
             $(document).on('click', '#btnEditAnnounce', function() {

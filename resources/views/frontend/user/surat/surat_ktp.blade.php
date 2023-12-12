@@ -21,7 +21,7 @@
                         <option value="{{ $kandidat->uuid }}"> {{ $kandidat->nama }}</option>
                     @endforeach
                 @else
-                    <option value="#" disabled> Tidak ada data</option>
+                    <option value="#" disabled>Semua anggota keluarga sudah memiliki KTP</option>
                 @endif
             </select>
         </div>
