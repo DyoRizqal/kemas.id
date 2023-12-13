@@ -1,6 +1,6 @@
 {
-    "name": "Kemas.id",
     "short_name": "Kemas.id",
+    "name": "Kemas.id",
     "icons": [
         {
             "src": "/img/android-chrome-192x192.png",
@@ -24,7 +24,9 @@
             "purpose": "maskable"
         }
     ],
-    "theme_color": "#002b3a",
-    "background_color": "#ffffff",
-    "display": "standalone"
+    "start_url": "/",
+    "background_color": "#FFFFFF",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#000000"
 }
