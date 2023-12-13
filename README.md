@@ -14,6 +14,7 @@ Link Deployment :
 https://kemas.site
 
 ### Tech Stack
+  <a href="#"><img align="left" alt="JavaScript" title="JavaScript" width="32px" src="https://cdn-icons-png.flaticon.com/128/5968/5968292.png" /></a>
   <a href="#"><img align="left" alt="php" title="PHP" width="60px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/2560px-PHP-logo.svg.png" /></a>
-  <a href="#"><img align="left" alt="Laravel" title="Laravel" width="80px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Logo.min.svg/2560px-Logo.min.svg.png" /></a>
+  <a href="#"><img align="left" alt="Laravel" title="Laravel" width="90px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Logo.min.svg/2560px-Logo.min.svg.png" /></a>
   <br>
