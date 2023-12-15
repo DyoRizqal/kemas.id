@@ -6,10 +6,11 @@
                 <p>Project Capstone SIB Dicoding Cycle 5</p>
                 <p class="text-bold">ID : C523-PS009</p>
                 <div class="social-icons">
-                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-                    <a href="mailto:info@kemas.id" class="social-icon"><i class="fas fa-envelope"></i></a>
+                    <a href="#" class="social-icon" aria-label="link-instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon" aria-label="link-facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-icon" aria-label="link-youtube"><i class="fab fa-youtube"></i></a>
+                    <a href="mailto:info@kemas.id" class="social-icon" aria-label="link-email"><i
+                            class="fas fa-envelope"></i></a>
                 </div>
             </div>
 

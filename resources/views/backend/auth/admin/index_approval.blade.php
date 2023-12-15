@@ -18,6 +18,13 @@
             tbody tr:hover {
                 background-color: transparent !important;
             }
+
+            table.dataTable thead th,
+            table.dataTable thead td,
+            table.dataTable tfoot th,
+            table.dataTable tfoot td {
+                text-align: center !important;
+            }
         </style>
     @endpush
     <x-backend.card>
@@ -59,8 +66,12 @@
                                 <tbody>
                                     @foreach ($surats as $surat)
                                         @php
-                                            $kk = App\Models\Warga::where('nomorKK', $surat->nomor_ktp_kk)->first();
-                                            $pemohon = App\Models\Warga::where('uuid', $surat->uuid_user)->first();
+                                            $kk = App\Models\Warga::where('nomorKK', $surat->nomor_ktp_kk)
+                                                ->withTrashed()
+                                                ->first();
+                                            $pemohon = App\Models\Warga::where('uuid', $surat->uuid_user)
+                                                ->withTrashed()
+                                                ->first();
                                         @endphp
                                         <tr>
                                             <td>{{ $loop->iteration }}.</td>
@@ -73,7 +84,7 @@
                                                     target="_blank">
                                                     {{ $surat->nomor_ktp_kk }}
                                                 </a><br> <b> {{ $kk->nama }} </b></td>
-                                            <td> {{ $surat->nama }} <br> <b> {{ $pemohon->statusDiKeluarga }}</td>
+                                            <td> {{ $surat->nama }} <br> <b> {{ $pemohon->statusDiKeluarga ?? '-' }}</td>
                                             <td> {{ $surat->tujuan ?: '-' }} </td>
                                             <td>
                                                 @if ($surat->ttd == 0)
@@ -84,7 +95,7 @@
                                                     <div class="item-actions row">
                                                         <div class="col-md-6 mb-2">
                                                             <a href="#" id="btnApprovalSurat"
-                                                                class="btn btn-sm btn-success w-100" data-toggle="modal"
+                                                                class="btn btn-sm btn-success" data-toggle="modal"
                                                                 data-target="#nomorModal" data-uuid="{{ $surat->uuid }}"
                                                                 data-id="{{ $surat->id }}">
                                                                 <span class="fas fa-check btn-icon"></span> Approve
@@ -97,7 +108,7 @@
                                                                 method="POST" class="w-100">
                                                                 @csrf
                                                                 <button type="submit"
-                                                                    class="btn btn-sm btn-danger w-100 show_confirm">
+                                                                    class="btn btn-sm btn-danger show_confirm">
                                                                     <span class="fas fa-times"></span> Reject
                                                                 </button>
                                                             </form>
@@ -134,7 +145,9 @@
                                 <input type="hidden" id="suratUuid" name="uuid">
                                 <div class="form-group">
                                     <label for="nomorInput">Nomor:</label>
-                                    <input type="text" class="form-control" id="nomorInput" name="nomor">
+                                    <input type="text" class="form-control" id="nomorInput" name="nomor"
+                                        placeholder="Nomor/Jenis Surat/Bulan Romawi/Tahun">
+                                    <small>No./[KTP],[DMS],[STKM],[SPN],[SKCK]/Bulan Romawi/Tahun</small>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
@@ -150,6 +163,7 @@
             $(document).ready(function() {
                 $('#myTable').DataTable({
                     "ordering": false,
+                    responsive: true
                 });
             });
             $(document).on('click', '#btnApprovalSurat', function() {
@@ -183,13 +197,30 @@
                             }
                         });
                     },
-                    error: function(error) {
-                        swal.fire({
-                            title: 'Error!',
-                            text: 'Terjadi kesalahan, coba lagi.',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status === 409) {
+                            swal.fire({
+                                title: 'Error',
+                                text: jqXHR.responseJSON.error,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.value) {
+                                    window.location.reload();
+                                }
+                            });
+                        } else {
+                            swal.fire({
+                                title: 'Error!',
+                                text: 'Terjadi kesalahan, coba lagi.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.value) {
+                                    window.location.reload();
+                                }
+                            });
+                        }
                     }
                 });
             });

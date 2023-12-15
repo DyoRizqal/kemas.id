@@ -14,6 +14,22 @@
                 border: none;
                 margin: auto;
             }
+
+            #card-news-section .card-img-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: auto !important;
+            }
+
+            #card-news-section .card-img-container img {
+                width: 100% !important;
+            }
+
+            #card-news-section .card-body {
+                position: relative;
+                padding: 15px;
+            }
         </style>
     @endpush
 
@@ -24,8 +40,7 @@
                     <div class="swiper-wrapper">
                         @foreach ($slideshow as $sd)
                             <div class="swiper-slide">
-                                <img src="{{ asset($sd->path) }}" class="card-img-top" alt="File"
-                                    onclick="showImagePreview('{{ asset($sd->path) }}')">
+                                <img src="{{ asset($sd->path) }}" class="card-img-top" alt="File" loading="lazy">
                             </div>
                         @endforeach
                     </div>
@@ -39,7 +54,8 @@
             <div class="container my-5" id="section-1">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="card text-left p-1">
+                        <div class="card text-left p-1" data-aos="fade-up" data-aos-offset="200" data-aos-delay="50"
+                            data-aos-duration="300" data-aos-easing="ease-in-out">
                             <div class="row">
                                 <div class="col-4 d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('img/point/1.jpg') }}" class="card-img-left" alt="Image 1">
@@ -54,7 +70,8 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="card text-left p-1">
+                        <div class="card text-left p-1" data-aos="fade-up" data-aos-offset="200" data-aos-delay="100"
+                            data-aos-duration="300" data-aos-easing="ease-in-out">
                             <div class="row">
                                 <div class="col-4 d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('img/point/2.jpg') }}" class="card-img-left" alt="Image 1">
@@ -69,7 +86,8 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="card text-left p-1">
+                        <div class="card text-left p-1" data-aos="fade-up" data-aos-offset="200" data-aos-delay="150"
+                            data-aos-duration="300" data-aos-easing="ease-in-out">
                             <div class="row">
                                 <div class="col-4 d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('img/point/3.jpg') }}" class="card-img-left" alt="Image 1">
@@ -84,7 +102,8 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="card text-left p-1">
+                        <div class="card text-left p-1" data-aos="fade-up" data-aos-offset="200" data-aos-delay="200"
+                            data-aos-duration="300" data-aos-easing="ease-in-out">
                             <div class="row">
                                 <div class="col-4 d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('img/point/4.jpg') }}" class="card-img-left" alt="Image 1">
@@ -99,7 +118,8 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <div class="card text-left p-1">
+                        <div class="card text-left p-1" data-aos="fade-up" data-aos-offset="200" data-aos-delay="250"
+                            data-aos-duration="300" data-aos-easing="ease-in-out">
                             <div class="row">
                                 <div class="col-4 d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('img/point/5.jpg') }}" class="card-img-left" alt="Image 1">
@@ -115,7 +135,8 @@
                     </div>
 
                     <div class="col-md-4">
-                        <div class="card text-left p-1">
+                        <div class="card text-left p-1" data-aos="fade-up" data-aos-offset="200" data-aos-delay="300"
+                            data-aos-duration="300" data-aos-easing="ease-in-out">
                             <div class="row">
                                 <div class="col-4 d-flex align-items-center justify-content-center">
                                     <img src="{{ asset('img/point/6.jpg') }}" class="card-img-left" alt="Image 1">
@@ -135,7 +156,8 @@
             <div class="container my-5" id="section-2">
                 <div class="row  align-items-center justify-content-center">
                     <div class="col-md-8 mb-4">
-                        <blockquote class="rt-blockquote">
+                        <blockquote class="rt-blockquote" data-aos="fade-up" data-aos-offset="200" data-aos-delay="50"
+                            data-aos-duration="300" data-aos-easing="ease-in-out">
                             Di tengah keberagaman yang melimpah, Rukun Tetangga kami berkembang sebagai simbol keharmonisan,
                             di
                             mana setiap suara didengar, setiap tangan bersatu, dan setiap hati berbagi dalam membangun
@@ -145,7 +167,8 @@
                         </blockquote>
                     </div>
 
-                    <div class="col-md-4 text-center mb-4">
+                    <div class="col-md-4 text-center mb-4" data-aos="fade-up" data-aos-offset="200" data-aos-delay="50"
+                        data-aos-duration="300" data-aos-easing="ease-in-out">
                         <img src="{{ asset('img/foot/ketua-rt.png') }}" alt="Deskripsi Foto" class="img-fluid">
                     </div>
                 </div>
@@ -153,9 +176,10 @@
 
             <div class="my-5" id="section-3">
                 <div class="container">
-                    <div class="row mb-3 align-items-center">
+                    <div class="row mb-3 align-items-center" data-aos="fade-down" data-aos-offset="200"
+                        data-aos-delay="50" data-aos-duration="300" data-aos-easing="ease-in-out">
                         <div class="col-6 col-md-8 d-flex align-items-center">
-                            <h4 class="title-sub mb-0">BERITA TERKINI</h4>
+                            <h4 class="title-sub mb-0">SUMBER BERITA TERKINI</h4>
                         </div>
                         <div class="col-6 col-md-4 d-flex justify-content-end">
                             <a href="{{ route('home.index_berita') }}" class="lihat-semua">Lihat Semua Berita </a>
@@ -163,26 +187,34 @@
                     </div>
 
                     <div class="row my-5">
-                        @if (count($news) > 0)
-                            @foreach ($news as $new)
-                                <div class="col-lg-4 col-md-6 mb-4">
-                                    <div class="card h-100">
-                                        <img src="{{ asset($new->gambar) }}" class="card-img-top" alt="Gambar Berita">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ $new->judul }}</h5>
-                                            <p class="card-text">{{ date('d F Y', strtotime($new->created_at)) }}</p>
+                        @if (isset($newsInfo) && !empty($newsInfo))
+                            @foreach ($newsInfo as $source => $info)
+                                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-down" data-aos-offset="200"
+                                    data-aos-delay="100" data-aos-duration="300" data-aos-easing="ease-in-out">
+                                    <a
+                                        href="{{ route('home.index_berita_kategori', ['sumber' => $source, 'kategori' => 'terbaru']) }}">
+                                        <div class="card h-100" id="card-news-section">
+                                            @if (isset($info['image']))
+                                                <div class="card-img-container">
+                                                    <img src="{{ $info['image'] }}" alt="{{ $source }} image"
+                                                        class="img-fluid">
+                                                </div>
+                                            @endif
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ ucfirst($source) }} News</h5>
+                                                <p class="card-text">{{ $info['title'] }}</p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </div>
                             @endforeach
                         @else
-                            <div class="d-flex align-items-center justify-content-center alert alert-secondary mx-auto"
-                                role="alert">
-                                Tidak ada data berita
-                            </div>
+                            <p>No news data available.</p>
                         @endif
+
                     </div>
-                    <div class="row mb-3 align-items-center">
+                    <div class="row mb-3 align-items-center" data-aos="fade-down" data-aos-offset="200"
+                        data-aos-delay="100" data-aos-duration="300" data-aos-easing="ease-in-out">
                         <div class="col-6 col-md-8 d-flex align-items-center">
                             <h4 class="title-sub mb-0">GALERI KEGIATAN</h4>
                         </div>
@@ -193,7 +225,8 @@
                     <div class="row my-5">
                         @if (count($gallerys) > 0)
                             @foreach ($gallerys as $uuid => $gallery)
-                                <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-down" data-aos-offset="200"
+                                    data-aos-delay="150" data-aos-duration="300" data-aos-easing="ease-in-out">
                                     <div class="card h-100">
                                         @if ($gallery->count() > 0)
                                             <div style="position: relative; display: block;">
@@ -230,7 +263,8 @@
                     </div>
                 </div>
             </div>
-            <div class="my-5" id="section-4">
+            <div class="my-5" id="section-4" data-aos="fade-up" data-aos-offset="200" data-aos-delay="100"
+                data-aos-duration="300" data-aos-easing="ease-in-out">
                 <div class="container">
                     <div class="card kemas-card mb-3">
                         <div class="row no-gutters">

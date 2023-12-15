@@ -5,10 +5,6 @@
 @section('content')
     @push('statis-css')
         <style>
-            .container {
-                padding-top: 20px;
-            }
-
             .custom-card {
                 border: none;
                 border-radius: 10px;
@@ -57,6 +53,26 @@
             .list-group-item:hover a {
                 color: white;
             }
+
+            .image-container {
+                position: relative;
+                width: 100%;
+                height: 500px;
+                background: #f0f0f0;
+                overflow: hidden;
+            }
+
+            .image-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0;
+                transition: opacity 0.5s ease-in-out;
+            }
+
+            .image-container img.loaded {
+                opacity: 1;
+            }
         </style>
     @endpush
     <div id="app" class="flex-center position-ref full-height">
@@ -66,47 +82,26 @@
                     <div class="col-6 col-md-8 d-flex align-items-center">
                         <h4 class="title-sub mb-0">BERITA TERKINI</h4>
                     </div>
-                </div>
-                <div class="container">
-                    <div class="row">
-                        @foreach ($endpoints as $endpoint)
-                            <div class="col-md-4 mb-4">
-                                <div class="card custom-card" data-toggle="collapse"
-                                    data-target="#collapse{{ $loop->index }}" aria-expanded="false"
-                                    aria-controls="collapse{{ $loop->index }}">
-                                    <div class="card-header text-uppercase">
-                                        {{ $endpoint['name'] }}
-                                        <i class="fas fa-chevron-down float-right"></i>
-                                    </div>
-                                    <div id="collapse{{ $loop->index }}" class="collapse">
-                                        <ul class="list-group list-group-flush">
-                                            @foreach ($endpoint['paths'] as $path)
-                                                <li class="list-group-item">
-                                                    <a href="{{ $path['path'] }}">{{ $path['name'] }}</a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
+                    <div class="col-6 col-md-4 d-flex justify-content-end">
+                        <a href="{{ route('home.index_berita') }}" class="lihat-semua">Kembali Ke Menu </a>
                     </div>
                 </div>
-
-
-
-
-                {{-- <div class="row my-5">
-                    @if (count($news) > 0)
+                <div class="row my-5">
+                    @if (is_array($news) && count($news) > 0)
                         @foreach ($news as $new)
                             <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="card h-100">
-                                    <img src="{{ asset($new->gambar) }}" class="card-img-top" alt="Gambar Berita">
-                                    <div class="card-body">
-                                        <h5 class="card-title" style="font-size: 12pt">{{ $new->judul }}</h5>
-                                        <p class="card-text">{{ date('d F Y', strtotime($new->created_at)) }}</p>
+                                <a href="{{ $new['link'] }}" target="_blank">
+                                    <div class="card h-100">
+                                        <div class="image-container">
+                                            <img src="{{ $new['thumbnail'] }}" alt="{{ $new['title'] }}" loading="lazy"
+                                                class="lazy-load">
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title" style="font-size: 12pt">{{ $new['title'] }}</h5>
+                                            <p class="card-text">{{ date('d F Y', strtotime($new['pubDate'])) }}</p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         @endforeach
                     @else
@@ -115,21 +110,18 @@
                             Tidak ada data berita
                         </div>
                     @endif
+
                 </div>
-                {{ $news->links() }} --}}
             </div>
         </div>
     </div>
     @push('custom-scripts')
         <script>
-            $(document).ready(function() {
-                $('.custom-card').click(function() {
-                    var collapseElementId = $(this).data('target');
-                    $(collapseElementId).collapse('toggle');
-                });
+            document.addEventListener("DOMContentLoaded", function() {
+                const images = document.querySelectorAll('.lazy-load');
 
-                $('.custom-card .list-group-item a').click(function(e) {
-                    e.stopPropagation();
+                images.forEach(img => {
+                    img.onload = () => img.classList.add('loaded');
                 });
             });
         </script>

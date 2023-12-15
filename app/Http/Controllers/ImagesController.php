@@ -67,7 +67,6 @@ class ImagesController extends Controller
                 $filename = Str::uuid()->toString() . '.' . $file->getClientOriginalExtension();
                 $file->storeAs($destinationPath, $filename, 'public');
 
-
                 $image = new Images;
                 $image->uuid = $uuid;
                 $image->jenis = 'gallery';

@@ -22,7 +22,13 @@
         </style>
     @endpush
     <x-backend.card>
+
         <x-slot name="header">
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
             @lang('List Data Warga')
             <div class="card-header-actions">
                 <a href="#" data-toggle="modal" data-target="#tambahWargaModal"
@@ -55,12 +61,12 @@
                                     <div class="col-md-6">
                                         <label for="nomorKK">Nomor KK</label>
                                         <input type="text" class="form-control" id="nomorKK" name="nomorKK" required
-                                            oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                            oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="nomorKTP">Nomor KTP</label>
                                         <input type="text" class="form-control" id="nomorKTP" name="nomorKTP" required
-                                            oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                            oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16">
                                     </div>
                                 </div>
                             </div>
@@ -124,16 +130,20 @@
                                             <td> {{ $warga->alamat ?: '-' }} </td>
                                             <td> {{ $warga->nomorTelepon ?: '-' }} </td>
                                             <td>
-                                                <a href="{{ route('admin.view_warga', ['kk' => $warga->nomorKK]) }}"
-                                                    id="btnEditNews" class="btn btn-sm btn-info"><span
-                                                        class="fas fa-search btn-icon mr-2"></span>
-                                                    View</a>
-                                                <button type="button" class="btn btn-sm btn-danger show_confirm"
-                                                    data-id="{{ $warga->id }}"
-                                                    data-url="{{ route('admin.destroy_warga', ['id' => $warga->id]) }}">
-                                                    <span class="cil-trash btn-icon mr-2"></span>
-                                                    Hapus
-                                                </button>
+                                                <div class="mb-2">
+                                                    <a href="{{ route('admin.view_warga', ['kk' => $warga->nomorKK]) }}"
+                                                        id="btnEditNews" class="btn btn-sm btn-info"><span
+                                                            class="fas fa-search btn-icon mr-2"></span>
+                                                        View</a>
+                                                </div>
+                                                {{-- <div>
+                                                    <button type="button" class="btn btn-sm btn-danger show_confirm"
+                                                        data-id="{{ $warga->id }}"
+                                                        data-url="{{ route('admin.destroy_warga', ['id' => $warga->id]) }}">
+                                                        <span class="cil-trash btn-icon mr-2"></span>
+                                                        Hapus
+                                                    </button>
+                                                </div> --}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -151,6 +161,7 @@
             $(document).ready(function() {
                 $('#myTable').DataTable({
                     "ordering": false,
+                    responsive: true
                 });
             });
 

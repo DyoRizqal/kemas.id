@@ -24,11 +24,6 @@
         </li>
 
         <li class="c-sidebar-nav-item">
-            <a href="{{ route('admin.index_news') }}"
-                class="c-sidebar-nav-link {{ request()->segment(1) === 'admin' && request()->segment(2) === 'news' ? 'c-active' : '' }}">
-                <i class="c-sidebar-nav-icon fas fa-newspaper"></i> Berita </a>
-        </li>
-        <li class="c-sidebar-nav-item">
             <a href="{{ route('admin.index_announce') }}"
                 class="c-sidebar-nav-link {{ request()->segment(1) === 'admin' && request()->segment(2) === 'announce' ? 'c-active' : '' }}">
                 <i class="c-sidebar-nav-icon fas fa-scroll"></i> Pengumuman </a>

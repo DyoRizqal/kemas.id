@@ -49,8 +49,9 @@
                                             <label for="tanggalMulai" class="form-label">Ditampilkan pada :</label>
                                             <div class="input-group">
                                                 <input type="date" class="form-control" id="tanggalMulai"
-                                                    name="tanggalMulai">
-                                                <input type="time" class="form-control" id="jamMulai" name="jamMulai">
+                                                    name="tanggalMulai" min="{{ date('Y-m-d') }}" required>
+                                                <input type="time" class="form-control" id="jamMulai" name="jamMulai"
+                                                    required>
                                             </div>
                                         </div>
                                     </div>
@@ -60,8 +61,9 @@
                                             <label for="tanggalAkhir" class="form-label">Berakhir pada :</label>
                                             <div class="input-group">
                                                 <input type="date" class="form-control" id="tanggalAkhir"
-                                                    name="tanggalAkhir">
-                                                <input type="time" class="form-control" id="jamAkhir" name="jamAkhir">
+                                                    name="tanggalAkhir" min="{{ date('Y-m-d') }}" required>
+                                                <input type="time" class="form-control" id="jamAkhir" name="jamAkhir"
+                                                    required>
                                             </div>
                                         </div>
                                     </div>
@@ -122,18 +124,21 @@
                                                 </table>
                                             </td>
                                             <td>
-
-                                                <a href="#" data-toggle="modal" data-target="#editAnnounceModal"
-                                                    id="btnEditAnnounce" class="btn btn-sm btn-primary"
-                                                    data-announce="{{ json_encode($announces) }}"><span
-                                                        class="cil-pencil btn-icon mr-2"></span>
-                                                    Edit</a>
-                                                <button type="button" class="btn btn-sm btn-danger show_confirm"
-                                                    data-id="{{ $announces->uuid }}" data-name="{{ $announces->alt }}"
-                                                    data-url="{{ route('admin.destroy_announce', ['id' => $announces->uuid]) }}">
-                                                    <span class="cil-trash btn-icon mr-2"></span>
-                                                    Hapus
-                                                </button>
+                                                <div class="mb-2">
+                                                    <a href="#" data-toggle="modal" data-target="#editAnnounceModal"
+                                                        id="btnEditAnnounce" class="btn btn-sm btn-primary"
+                                                        data-announce="{{ json_encode($announces) }}"><span
+                                                            class="cil-pencil btn-icon mr-2"></span>
+                                                        Edit</a>
+                                                </div>
+                                                <div>
+                                                    <button type="button" class="btn btn-sm btn-danger show_confirm"
+                                                        data-id="{{ $announces->uuid }}" data-name="{{ $announces->alt }}"
+                                                        data-url="{{ route('admin.destroy_announce', ['id' => $announces->uuid]) }}">
+                                                        <span class="cil-trash btn-icon mr-2"></span>
+                                                        Hapus
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -171,11 +176,12 @@
                                 <div class="form-group">
                                     <label for="edit-starts-at">Tanggal Mulai</label>
                                     <input type="datetime-local" id="edit-starts-at" name="starts_at"
-                                        class="form-control">
+                                        min="{{ date('Y-m-d\TH:i') }}" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="edit-ends-at">Tanggal Berakhir</label>
-                                    <input type="datetime-local" id="edit-ends-at" name="ends_at" class="form-control">
+                                    <input type="datetime-local" id="edit-ends-at" name="ends_at"
+                                        min="{{ date('Y-m-d\TH:i') }}" class="form-control">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -194,6 +200,7 @@
             $(document).ready(function() {
                 $('#myTable').DataTable({
                     "ordering": false,
+                    responsive: true
                 });
             });
             $(document).on('click', '#btnEditAnnounce', function() {
