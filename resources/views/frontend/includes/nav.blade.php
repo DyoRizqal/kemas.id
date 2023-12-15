@@ -196,6 +196,39 @@
                                     <span class="caret"></span>
                                 </x-slot>
                             </x-utils.link>
+                <ul class="navbar-nav ml-auto d-flex d-md-none">
+                    <li class="nav-item active">
+                        <a class="nav-link {{ Route::is('frontend.index') ? 'active' : '' }}"
+                            href="{{ route('frontend.index') }}">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::is('home.index_berita') ? 'active' : '' }}"
+                            href="{{ route('home.index_berita') }}">Berita</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::is('home.index_galeri') ? 'active' : '' }}"
+                            href="{{ route('home.index_galeri') }}">Galeri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::is('home.index_tentang') ? 'active' : '' }}"
+                            href="{{ route('home.index_tentang') }}">Tentang Kami</a>
+                    </li>
+                    @guest
+                        <li class="nav-item">
+                            <a class="btn nav-link btn-nav-link" href="{{ route('frontend.auth.login') }}">Login</a>
+                        </li>
+                    @else
+                        <li class="nav-item dropdown">
+                            <x-utils.link href="#" id="navbarDropdown"
+                                class="btn nav-link btn-nav-link dropdown-toggle" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false" v-pre>
+                                <x-slot name="text">
+                                    <img class="rounded-circle mr-2" style="max-height: 20px"
+                                        src="{{ $logged_in_user->avatar }}" /> Hi,
+                                    {{ $logged_in_user->name }}
+                                    <span class="caret"></span>
+                                </x-slot>
+                            </x-utils.link>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 @if ($logged_in_user->isAdmin())

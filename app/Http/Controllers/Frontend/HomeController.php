@@ -79,7 +79,20 @@ class HomeController
     {
         // $url = "https://api-berita-indonesia.vercel.app/{$sumber}/{$kategori}/";
         // $response = Http::get($url);
+        // $url = "https://api-berita-indonesia.vercel.app/{$sumber}/{$kategori}/";
+        // $response = Http::get($url);
 
+        $client = new Client(['verify' => false]);
+        $response = $client->request('GET', 'https://api-berita-indonesia.vercel.app/' . $sumber . '/' . $kategori);
+
+        if ($response->getStatusCode() == 200) {
+            $data = json_decode($response->getBody()->getContents(), true);
+
+            if (isset($data['data']) && isset($data['data']['posts'])) {
+                return view('frontend.index_berita_kategori', ['news' => $data['data']['posts']]);
+            } else {
+                return view('frontend.index_berita_kategori', ['news' => null]);
+            }
         $client = new Client(['verify' => false]);
         $response = $client->request('GET', 'https://api-berita-indonesia.vercel.app/' . $sumber . '/' . $kategori);
 
