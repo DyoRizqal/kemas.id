@@ -86,6 +86,7 @@
     @endpush
     <x-backend.card>
         <x-slot name="body">
+
             <div class="modal fade" id="tambahWargaModal" tabindex="-1" role="dialog" aria-labelledby="tambahWargaModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
@@ -101,7 +102,8 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="nama">Nama <small class="text-danger">*</small> </label>
-                                    <input type="text" class="form-control" id="nama" name="nama" required>
+                                    <input type="text" class="form-control" id="nama" name="nama"
+                                        value="{{ old('nama') }}" required>
                                 </div>
 
                                 <div class="form-group">
@@ -118,7 +120,8 @@
                                     <div class="col-md-6">
                                         <label for="nomorKTP">Nomor KTP</label>
                                         <input type="text" class="form-control" id="nomorKTP" name="nomorKTP"
-                                            oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16">
+                                            oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="16"
+                                            value="{{ old('nomorKTP') }}">
                                     </div>
                                 </div>
 
@@ -127,7 +130,10 @@
                                         <label for="tempatLahir">Tempat Lahir <small class="text-danger">*</small></label>
                                         <select class="form-control" id="tempatLahir" name="tempatLahir" required>
                                             @foreach ($provinsi['value'] as $prov)
-                                                <option value="{{ $prov['name'] }}">{{ $prov['name'] }}</option>
+                                                <option value="{{ $prov['name'] }}"
+                                                    {{ old('tempatLahir') == $prov['name'] ? 'selected' : '' }}>
+                                                    {{ $prov['name'] }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -142,20 +148,31 @@
                                     <div class="col-md-6">
                                         <label for="jenisKelamin">Jenis Kelamin <small class="text-danger">*</small></label>
                                         <select class="form-control" id="jenisKelamin" name="jenisKelamin" required>
-                                            <option value="Laki-laki">Laki-laki</option>
-                                            <option value="Perempuan">Perempuan</option>
+                                            <option value="Laki-laki"
+                                                {{ old('jenisKelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki
+                                            </option>
+                                            <option value="Perempuan"
+                                                {{ old('jenisKelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan
+                                            </option>
                                         </select>
+
                                     </div>
 
                                     <div class="col-md-6">
                                         <label for="agama">Agama <small class="text-danger">*</small></label>
                                         <select class="form-control" id="agama" name="agama" required>
-                                            <option value="Islam">Islam</option>
-                                            <option value="Kristen">Kristen</option>
-                                            <option value="Budha">Budha</option>
-                                            <option value="Hindu">Hindu</option>
-                                            <option value="Lainnya">Lainnya</option>
+                                            <option value="Islam" {{ old('agama') == 'Islam' ? 'selected' : '' }}>Islam
+                                            </option>
+                                            <option value="Kristen" {{ old('agama') == 'Kristen' ? 'selected' : '' }}>
+                                                Kristen</option>
+                                            <option value="Budha" {{ old('agama') == 'Budha' ? 'selected' : '' }}>Budha
+                                            </option>
+                                            <option value="Hindu" {{ old('agama') == 'Hindu' ? 'selected' : '' }}>Hindu
+                                            </option>
+                                            <option value="Lainnya" {{ old('agama') == 'Lainnya' ? 'selected' : '' }}>
+                                                Lainnya</option>
                                         </select>
+
                                     </div>
                                 </div>
 
@@ -164,10 +181,16 @@
                                         <label for="statusPerkawinan">Status Perkawinan <small
                                                 class="text-danger">*</small></label>
                                         <select class="form-control" id="statusPerkawinan" name="statusPerkawinan" required>
-                                            <option value="Belum Menikah">Belum Menikah</option>
-                                            <option value="Menikah">Menikah</option>
-                                            <option value="Duda">Duda</option>
-                                            <option value="Janda">Janda</option>
+                                            <option value="Belum Menikah"
+                                                {{ old('statusPerkawinan') == 'Belum Menikah' ? 'selected' : '' }}>Belum
+                                                Menikah</option>
+                                            <option value="Menikah"
+                                                {{ old('statusPerkawinan') == 'Menikah' ? 'selected' : '' }}>Menikah
+                                            </option>
+                                            <option value="Duda"
+                                                {{ old('statusPerkawinan') == 'Duda' ? 'selected' : '' }}>Duda</option>
+                                            <option value="Janda"
+                                                {{ old('statusPerkawinan') == 'Janda' ? 'selected' : '' }}>Janda</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
@@ -175,10 +198,16 @@
                                                 class="text-danger">*</small></label>
                                         <select class="form-control" id="statusDiKeluarga" name="statusDiKeluarga"
                                             required>
-                                            <option value="Kepala Keluarga">Kepala Keluarga</option>
-                                            <option value="Istri">Istri</option>
-                                            <option value="Anak">Anak</option>
-                                            <option value="Lainnya">Lainnya</option>
+                                            <option value="Kepala Keluarga"
+                                                {{ old('statusDiKeluarga') == 'Kepala Keluarga' ? 'selected' : '' }}>Kepala
+                                                Keluarga</option>
+                                            <option value="Istri"
+                                                {{ old('statusDiKeluarga') == 'Istri' ? 'selected' : '' }}>Istri</option>
+                                            <option value="Anak"
+                                                {{ old('statusDiKeluarga') == 'Anak' ? 'selected' : '' }}>Anak</option>
+                                            <option value="Lainnya"
+                                                {{ old('statusDiKeluarga') == 'Lainnya' ? 'selected' : '' }}>Lainnya
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -187,30 +216,43 @@
                                     <div class="col-md-6">
                                         <label for="golonganDarah">Golongan Darah</label>
                                         <select class="form-control" id="golonganDarah" name="golonganDarah">
-                                            <option value="A">A</option>
-                                            <option value="B">B</option>
-                                            <option value="AB">AB</option>
-                                            <option value="O">O</option>
-                                            <option value="Tidak Diketahui">Tidak Diketahui</option>
+                                            <option value="A" {{ old('golonganDarah') == 'A' ? 'selected' : '' }}>A
+                                            </option>
+                                            <option value="B" {{ old('golonganDarah') == 'B' ? 'selected' : '' }}>B
+                                            </option>
+                                            <option value="AB" {{ old('golonganDarah') == 'AB' ? 'selected' : '' }}>AB
+                                            </option>
+                                            <option value="O" {{ old('golonganDarah') == 'O' ? 'selected' : '' }}>O
+                                            </option>
+                                            <option value="Tidak Diketahui"
+                                                {{ old('golonganDarah') == 'Tidak Diketahui' ? 'selected' : '' }}>Tidak
+                                                Diketahui</option>
                                         </select>
+
                                     </div>
 
                                     <div class="col-md-6">
                                         <label for="kewarganegaraan">Kewarganegaraan</label>
                                         <select class="form-control" id="kewarganegaraan" name="kewarganegaraan">
-                                            <option value="WNI">WNI</option>
-                                            <option value="WNA">WNA</option>
+                                            <option value="WNI"
+                                                {{ old('kewarganegaraan') == 'WNI' ? 'selected' : '' }}>WNI</option>
+                                            <option value="WNA"
+                                                {{ old('kewarganegaraan') == 'WNA' ? 'selected' : '' }}>WNA</option>
                                         </select>
+
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="pekerjaan">Pekerjaan</label>
-                                    <input type="text" class="form-control" id="pekerjaan" name="pekerjaan">
+                                    <input type="text" class="form-control" id="pekerjaan" name="pekerjaan"
+                                        value="{{ old('pekerjaan') }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="nomorTelepon">Nomor Telepon</label>
-                                    <input type="text" class="form-control" id="nomorTelepon" name="nomorTelepon" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                    <input type="text" class="form-control" id="nomorTelepon" name="nomorTelepon"
+                                        value="{{ old('nomorTelepon') }}"
+                                        oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                                 </div>
 
                                 <div class="form-group">
@@ -230,6 +272,11 @@
 
             <div class="my-5" id="section-4" style="margin-top: 6rem !important">
                 <div class="container">
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
                     <div class="card kemas-card mb-3">
                         <div class="row no-gutters d-flex">
                             <div class="col-md-5 text-center">
@@ -386,9 +433,11 @@
                                     </div>
                                 @endforeach
                             @else
-                                <div class="d-flex align-items-center justify-content-center alert alert-secondary mx-auto"
-                                    role="alert">
-                                    Tidak ada anak dalam anggota keluarga
+                                <div class="col-md-6 mb-4">
+                                    <div class="d-flex align-items-center justify-content-center alert alert-secondary mx-auto"
+                                        role="alert">
+                                        Tidak ada anak dalam anggota keluarga
+                                    </div>
                                 </div>
                             @endif
                             @if (count($lainnya) > 0)

@@ -41,7 +41,9 @@
                                 <tbody>
                                     @foreach ($inboxs as $announces)
                                         @php
-                                            $warga = App\Models\Warga::where('uuid', $announces->dari)->first();
+                                            $warga = App\Models\Warga::where('uuid', $announces->dari)
+                                                ->withTrashed()
+                                                ->first();
                                         @endphp
                                         <tr>
                                             <td> {{ date('d F Y', strtotime($announces->tanggal)) }}</td>

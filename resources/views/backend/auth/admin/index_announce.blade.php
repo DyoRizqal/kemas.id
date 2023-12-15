@@ -49,8 +49,9 @@
                                             <label for="tanggalMulai" class="form-label">Ditampilkan pada :</label>
                                             <div class="input-group">
                                                 <input type="date" class="form-control" id="tanggalMulai"
-                                                    name="tanggalMulai" required>
-                                                <input type="time" class="form-control" id="jamMulai" name="jamMulai">
+                                                    name="tanggalMulai" min="{{ date('Y-m-d') }}" required>
+                                                <input type="time" class="form-control" id="jamMulai" name="jamMulai"
+                                                    required>
                                             </div>
                                         </div>
                                     </div>
@@ -60,8 +61,9 @@
                                             <label for="tanggalAkhir" class="form-label">Berakhir pada :</label>
                                             <div class="input-group">
                                                 <input type="date" class="form-control" id="tanggalAkhir"
-                                                    name="tanggalAkhir" required>
-                                                <input type="time" class="form-control" id="jamAkhir" name="jamAkhir">
+                                                    name="tanggalAkhir" min="{{ date('Y-m-d') }}" required>
+                                                <input type="time" class="form-control" id="jamAkhir" name="jamAkhir"
+                                                    required>
                                             </div>
                                         </div>
                                     </div>
@@ -174,11 +176,12 @@
                                 <div class="form-group">
                                     <label for="edit-starts-at">Tanggal Mulai</label>
                                     <input type="datetime-local" id="edit-starts-at" name="starts_at"
-                                        class="form-control">
+                                        min="{{ date('Y-m-d\TH:i') }}" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="edit-ends-at">Tanggal Berakhir</label>
-                                    <input type="datetime-local" id="edit-ends-at" name="ends_at" class="form-control">
+                                    <input type="datetime-local" id="edit-ends-at" name="ends_at"
+                                        min="{{ date('Y-m-d\TH:i') }}" class="form-control">
                                 </div>
                             </div>
                             <div class="modal-footer">

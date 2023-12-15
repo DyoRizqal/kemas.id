@@ -22,7 +22,13 @@
         </style>
     @endpush
     <x-backend.card>
+
         <x-slot name="header">
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
             @lang('List Data Warga')
             <div class="card-header-actions">
                 <a href="#" data-toggle="modal" data-target="#tambahWargaModal"
@@ -130,14 +136,14 @@
                                                             class="fas fa-search btn-icon mr-2"></span>
                                                         View</a>
                                                 </div>
-                                                <div>
+                                                {{-- <div>
                                                     <button type="button" class="btn btn-sm btn-danger show_confirm"
                                                         data-id="{{ $warga->id }}"
                                                         data-url="{{ route('admin.destroy_warga', ['id' => $warga->id]) }}">
                                                         <span class="cil-trash btn-icon mr-2"></span>
                                                         Hapus
                                                     </button>
-                                                </div>
+                                                </div> --}}
                                             </td>
                                         </tr>
                                     @endforeach

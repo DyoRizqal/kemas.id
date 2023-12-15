@@ -146,6 +146,13 @@ class AdminController extends Controller
     }
     public function store_warga(Request $request)
     {
+        if (Warga::where('nomorKK', $request->nomorKK)->exists()) {
+            return redirect()->back()->with('error', 'Warga dengan Nomor KK tersebut sudah ada');
+        }
+
+        if (Warga::where('nomorKTP', $request->nomorKTP)->exists()) {
+            return redirect()->back()->with('error', 'Warga dengan Nomor KTP tersebut sudah ada');
+        }
         $uuid = Str::uuid()->toString();
         $wargas = new Warga;
         $wargas->uuid = $uuid;
@@ -179,32 +186,35 @@ class AdminController extends Controller
     }
     public function update_warga(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'nama' => 'required|string|max:255',
-            'alamat' => 'required|string',
-            'nomorKK' => 'required|string|max:20',
-            'nomorKTP' => 'required|string|max:20',
-            'tempatLahir' => 'required|string',
-            'tanggalLahir' => 'required|date',
-            'jenisKelamin' => 'required|string',
-            'statusPerkawinan' => 'required|string',
-            'pekerjaan' => 'nullable|string',
-            'nomorTelepon' => 'nullable|string',
-            'email' => 'nullable|email',
-            'statusDiKeluarga' => 'required|string',
-            'kepalaKeluarga' => 'nullable|string',
-            'golonganDarah' => 'nullable|string',
-            'kewarganegaraan' => 'required|string',
-            'agama' => 'required|string'
-        ]);
-        $validatedData = $validator->validated();
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+        $existingWarga = Warga::where('nomorKTP', $request->nomorKTP)->where('id', '<>', $id)->first();
+        if ($existingWarga) {
+            return redirect()->back()->with('error', 'Warga dengan Nomor KTP tersebut sudah ada')->withInput();
         }
 
+        if ($request->statusDiKeluarga == 'Kepala Keluarga' && Warga::where('nomorKK', $request->nomorKK)->where('statusDiKeluarga', 'Kepala Keluarga')->where('id', '<>', $id)->exists()) {
+            return redirect()->back()->with('error', 'Hanya terdapat 1 kepala keluarga dalam 1 KK')->withInput();
+        }
+        if ($request->statusDiKeluarga == 'Kepala Keluarga' && Warga::where('nomorKK', $request->nomorKK)->where('statusDiKeluarga', 'Kepala Keluarga')->exists()) {
+            return redirect()->back()->with('error', 'Hanya terdapat 1 kepala keluarga dalam 1 KK')->withInput();
+        }
         $warga = Warga::findOrFail($id);
-        $warga->update($validatedData);
+
+        $warga->nama = $request->nama;
+        $warga->alamat = $request->alamat;
+        $warga->nomorKK = $request->nomorKK;
+        $warga->nomorKTP = $request->nomorKTP;
+        $warga->tempatLahir = $request->tempatLahir;
+        $warga->tanggalLahir = $request->tanggalLahir;
+        $warga->jenisKelamin = $request->jenisKelamin;
+        $warga->statusPerkawinan = $request->statusPerkawinan;
+        $warga->pekerjaan = $request->pekerjaan;
+        $warga->nomorTelepon = $request->nomorTelepon;
+        $warga->email = $request->email;
+        $warga->statusDiKeluarga = $request->statusDiKeluarga;
+        $warga->golonganDarah = $request->golonganDarah;
+        $warga->kewarganegaraan = $request->kewarganegaraan;
+        $warga->agama = $request->agama;
+        $warga->update();
 
         return Redirect::back()->withFlashSuccess(__('Data Warga berhasil diupdate!'));
     }
@@ -227,27 +237,32 @@ class AdminController extends Controller
     }
     public function add_warga(Request $request)
     {
-        $validatedData = $request->validate([
-            'nama' => 'required|string|max:255',
-            'alamat' => 'required|string',
-            'nomorKK' => 'required|string|max:20',
-            'nomorKTP' => 'required|string|max:20',
-            'tempatLahir' => 'required|string',
-            'tanggalLahir' => 'required|date',
-            'jenisKelamin' => 'required|string',
-            'statusPerkawinan' => 'required|string',
-            'pekerjaan' => 'nullable|string',
-            'nomorTelepon' => 'nullable|string',
-            'email' => 'nullable|email',
-            'statusDiKeluarga' => 'required|string',
-            'kepalaKeluarga' => 'nullable|string',
-            'golonganDarah' => 'nullable|string',
-            'kewarganegaraan' => 'required|string',
-            'agama' => 'required|string'
-        ]);
-        $validatedData['uuid'] = Str::uuid()->toString();
-        Warga::create($validatedData);
-        return Redirect::back()->withFlashSuccess(__('Data Warga berhasil ditambahkan!'));
+        if (Warga::where('nomorKTP', $request->nomorKTP)->exists()) {
+            return redirect()->back()->with('error', 'Warga dengan Nomor KTP tersebut sudah ada')->withInput();
+        }
+        if ($request->statusDiKeluarga == 'Kepala Keluarga' && Warga::where('nomorKK', $request->nomorKK)->where('statusDiKeluarga', 'Kepala Keluarga')->exists()) {
+            return redirect()->back()->with('error', 'Hanya terdapat 1 kepala keluarga dalam 1 KK')->withInput();
+        }
+        $warga = new Warga;
+        $warga->uuid = Str::uuid()->toString();
+        $warga->nama = $request->nama;
+        $warga->alamat = $request->alamat;
+        $warga->nomorKK = $request->nomorKK;
+        $warga->nomorKTP = $request->nomorKTP;
+        $warga->tempatLahir = $request->tempatLahir;
+        $warga->tanggalLahir = $request->tanggalLahir;
+        $warga->jenisKelamin = $request->jenisKelamin;
+        $warga->statusPerkawinan = $request->statusPerkawinan;
+        $warga->pekerjaan = $request->pekerjaan;
+        $warga->nomorTelepon = $request->nomorTelepon;
+        $warga->email = $request->email;
+        $warga->statusDiKeluarga = $request->statusDiKeluarga;
+        $warga->golonganDarah = $request->golonganDarah;
+        $warga->kewarganegaraan = $request->kewarganegaraan;
+        $warga->agama = $request->agama;
+        $warga->save();
+
+        return Redirect::back()->withFlashSuccess(__('Anggota Keluarga berhasil ditambahkan!'));
     }
     public function find_warga(Request $request)
     {
@@ -285,12 +300,18 @@ class AdminController extends Controller
     public function approve_approval(Request $request, $id)
     {
         $surat = Surat::where('uuid', $id)->first();
+
         if (!$surat) {
             return response()->json(['message' => 'Surat tidak ditemukan'], 404);
+        }
+        $nomorExist = Surat::where('nomor', $request->nomor)->exists();
+        if ($nomorExist) {
+            return response()->json(['error' => 'Nomor sudah digunakan'], 409);
         }
         $surat->nomor = $request->nomor;
         $surat->ttd = 1;
         $surat->update();
+
         return response()->json(['message' => 'Surat berhasil disetujui']);
     }
     public function reject_approval(Request $request, $id)

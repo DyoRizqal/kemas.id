@@ -276,7 +276,7 @@
 
             $(document).on('click', '.btn-edit', function() {
                 var warga = $(this).data('warga');
-
+                $('#tambahWargaModalLabel').text('Edit Warga ' + warga.nama);
                 $('#nama').val(warga.nama);
                 $('#alamat').val(warga.alamat);
                 $('#nomorKK').val(warga.nomorKK);

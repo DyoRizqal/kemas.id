@@ -66,8 +66,12 @@
                                 <tbody>
                                     @foreach ($surats as $surat)
                                         @php
-                                            $kk = App\Models\Warga::where('nomorKK', $surat->nomor_ktp_kk)->first();
-                                            $pemohon = App\Models\Warga::where('uuid', $surat->uuid_user)->first();
+                                            $kk = App\Models\Warga::where('nomorKK', $surat->nomor_ktp_kk)
+                                                ->withTrashed()
+                                                ->first();
+                                            $pemohon = App\Models\Warga::where('uuid', $surat->uuid_user)
+                                                ->withTrashed()
+                                                ->first();
                                         @endphp
                                         <tr>
                                             <td>{{ $loop->iteration }}.</td>
@@ -193,13 +197,30 @@
                             }
                         });
                     },
-                    error: function(error) {
-                        swal.fire({
-                            title: 'Error!',
-                            text: 'Terjadi kesalahan, coba lagi.',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        });
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status === 409) {
+                            swal.fire({
+                                title: 'Error',
+                                text: jqXHR.responseJSON.error,
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.value) {
+                                    window.location.reload();
+                                }
+                            });
+                        } else {
+                            swal.fire({
+                                title: 'Error!',
+                                text: 'Terjadi kesalahan, coba lagi.',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            }).then((result) => {
+                                if (result.value) {
+                                    window.location.reload();
+                                }
+                            });
+                        }
                     }
                 });
             });

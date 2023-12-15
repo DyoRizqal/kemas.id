@@ -28,14 +28,14 @@ class HomeController
     public function index()
     {
         $data['slideshow'] = Images::where('jenis', 'slideshow')->where('status', 1)->get();
-        $image = Images::where('jenis', 'gallery')->orderBy('id', 'DESC')->where('status', 1)->get();
+        $image = Images::where('jenis', 'gallery')->orderBy('id', 'DESC')->where('status', 1)->take(6)->get();
         $data['gallerys'] = $image->groupBy('uuid');
 
         $client = new Client(['verify' => false]);
         $urls = [
             'cnn' => 'https://api-berita-indonesia.vercel.app/cnn/terbaru/',
             'republika' => 'https://api-berita-indonesia.vercel.app/republika/terbaru/',
-            'tempo' => 'https://api-berita-indonesia.vercel.app/tempo/nasional/'
+            'cnbc' => 'https://api-berita-indonesia.vercel.app/cnbc/terbaru/'
         ];
 
         $newsInfo = [];
@@ -45,12 +45,12 @@ class HomeController
 
             if ($response->getStatusCode() == 200) {
                 $apiData = json_decode($response->getBody()->getContents(), true);
-
+                $imagePath = asset('img/news/' . $source . '.jpg');
                 $newsInfo[$source] = [
                     'link' => $apiData['data']['link'] ?? null,
                     'description' => $apiData['data']['description'] ?? null,
                     'title' => $apiData['data']['title'] ?? null,
-                    'image' => $apiData['data']['image'] ?? null
+                    'image' => $imagePath
                 ];
             }
         }
@@ -79,6 +79,8 @@ class HomeController
     {
         // $url = "https://api-berita-indonesia.vercel.app/{$sumber}/{$kategori}/";
         // $response = Http::get($url);
+        // $url = "https://api-berita-indonesia.vercel.app/{$sumber}/{$kategori}/";
+        // $response = Http::get($url);
 
         $client = new Client(['verify' => false]);
         $response = $client->request('GET', 'https://api-berita-indonesia.vercel.app/' . $sumber . '/' . $kategori);
@@ -91,8 +93,20 @@ class HomeController
             } else {
                 return view('frontend.index_berita_kategori', ['news' => null]);
             }
-        } else {
-            return back()->withErrors('Tidak dapat mengambil data dari API.');
+            $client = new Client(['verify' => false]);
+            $response = $client->request('GET', 'https://api-berita-indonesia.vercel.app/' . $sumber . '/' . $kategori);
+
+            if ($response->getStatusCode() == 200) {
+                $data = json_decode($response->getBody()->getContents(), true);
+
+                if (isset($data['data']) && isset($data['data']['posts'])) {
+                    return view('frontend.index_berita_kategori', ['news' => $data['data']['posts']]);
+                } else {
+                    return view('frontend.index_berita_kategori', ['news' => null]);
+                }
+            } else {
+                return back()->withErrors('Tidak dapat mengambil data dari API.');
+            }
         }
     }
     public function index_tentang()
@@ -142,6 +156,7 @@ class HomeController
             $data['kk']       = Warga::where('nomorKK', $data['kkNomor']->nomorKK)->where('statusDiKeluarga', 'Kepala Keluarga')->first();
             $data['istri']    = Warga::where('nomorKK', $data['kkNomor']->nomorKK)->where('statusDiKeluarga', 'Istri')->get();
             $data['anak']     = Warga::where('nomorKK', $data['kkNomor']->nomorKK)->where('statusDiKeluarga', 'Anak')->get();
+            $data['lainnya']  = Warga::where('nomorKK', $data['kkNomor']->nomorKK)->where('statusDiKeluarga', 'Lainnya')->get();
             $data['provinsi'] = $response->json();
             $data['wargas'] = Warga::where('nomorKK', $data['kkNomor']->nomorKK)->orderBy('id', 'DESC')->get();
             return view('frontend.index_keluarga', $data);
