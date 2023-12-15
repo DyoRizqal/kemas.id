@@ -93,19 +93,20 @@ class HomeController
             } else {
                 return view('frontend.index_berita_kategori', ['news' => null]);
             }
-        $client = new Client(['verify' => false]);
-        $response = $client->request('GET', 'https://api-berita-indonesia.vercel.app/' . $sumber . '/' . $kategori);
+            $client = new Client(['verify' => false]);
+            $response = $client->request('GET', 'https://api-berita-indonesia.vercel.app/' . $sumber . '/' . $kategori);
 
-        if ($response->getStatusCode() == 200) {
-            $data = json_decode($response->getBody()->getContents(), true);
+            if ($response->getStatusCode() == 200) {
+                $data = json_decode($response->getBody()->getContents(), true);
 
-            if (isset($data['data']) && isset($data['data']['posts'])) {
-                return view('frontend.index_berita_kategori', ['news' => $data['data']['posts']]);
+                if (isset($data['data']) && isset($data['data']['posts'])) {
+                    return view('frontend.index_berita_kategori', ['news' => $data['data']['posts']]);
+                } else {
+                    return view('frontend.index_berita_kategori', ['news' => null]);
+                }
             } else {
-                return view('frontend.index_berita_kategori', ['news' => null]);
+                return back()->withErrors('Tidak dapat mengambil data dari API.');
             }
-        } else {
-            return back()->withErrors('Tidak dapat mengambil data dari API.');
         }
     }
     public function index_tentang()
